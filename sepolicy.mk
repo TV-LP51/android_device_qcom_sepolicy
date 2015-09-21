@@ -5,6 +5,11 @@ BOARD_SEPOLICY_DIRS += \
        device/qcom/sepolicy/test \
        device/qcom/sepolicy/$(TARGET_BOARD_PLATFORM)
 
+# compile CSVT policies only if BoardConfig file specifies
+ifeq ($(TARGET_USES_CSVT),true)
+       BOARD_SEPOLICY_DIRS += device/qcom/sepolicy/common/csvt
+endif
+
 BOARD_SEPOLICY_UNION += \
        genfs_contexts \
        file_contexts \
@@ -88,6 +93,7 @@ BOARD_SEPOLICY_UNION += \
        mediaserver_test.te \
        energyawareness.te \
        hbtp.te \
+       platform_app.te \
        dtsconfigurator.te \
        vold.te
 
@@ -105,3 +111,5 @@ SSC_TARGET_LIST += msm8994
 BOARD_SEPOLICY_UNION += sensors.te
 BOARD_SEPOLICY_UNION += sensors_test.te
 #endif
+
+-include vendor/cm/sepolicy/qcom/sepolicy.mk
